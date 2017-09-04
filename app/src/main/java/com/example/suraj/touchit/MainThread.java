@@ -1,7 +1,6 @@
 package com.example.suraj.touchit;
 
 import android.graphics.Canvas;
-import android.provider.Settings;
 import android.view.SurfaceHolder;
 
 /**
@@ -9,21 +8,21 @@ import android.view.SurfaceHolder;
  */
 
 public class MainThread extends Thread {
-    public static final int MAX_FPS = 30;
+    public static final int MAX_FPS = 60;
+    public static Canvas canvas;
     private double averageFPS;
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
-    public static Canvas canvas;
-
-    public void setRunning (boolean running) {
-        this.running = running;
-    }
 
     public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class MainThread extends Thread {
             waitTime = targetTime - timeMillis;
             try {
                 if (waitTime>0)
-                    this.sleep(waitTime);
+                    sleep(waitTime);
             } catch (Exception e){e.printStackTrace();}
 
             totalTime+=System.nanoTime() - startTime;
@@ -67,7 +66,7 @@ public class MainThread extends Thread {
                 averageFPS = 1000/((totalTime/frameCount)/1000000);
                 frameCount=0;
                 totalTime=0;
-                System.out.println(averageFPS);
+                //System.out.println(averageFPS);
             }
         }
     }

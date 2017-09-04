@@ -1,7 +1,7 @@
 package com.example.suraj.touchit;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
@@ -19,6 +19,8 @@ public class MainActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_HEIGHT = dm.heightPixels;
         Constants.SCREEN_WIDTH = dm.widthPixels;
+
+        Constants.PLATFORM = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.platform);
 
         setContentView(new GamePanel(this));
 

@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import static com.example.suraj.touchit.MainThread.canvas;
-
 /**
  * Created by suraj on 29-06-2017.
  */
@@ -14,6 +12,7 @@ public class Obstacle implements GameObject {
     private Rect rectangle;
     private Rect rectangle2;
     private int color;
+
 
 
     public Obstacle(int rectHeight, int color, int startX, int startY, int playerGap) {
@@ -43,10 +42,16 @@ public class Obstacle implements GameObject {
         paint.setColor(color);
         canvas.drawRect(rectangle,paint);
         canvas.drawRect(rectangle2,paint);
+        canvas.drawBitmap(Constants.PLATFORM, null, rectangle, paint);
+        canvas.drawBitmap(Constants.PLATFORM, null, rectangle2, paint);
     }
 
     @Override
     public void update() {
 
+    }
+
+    public boolean powerUpCollide(PowerUp powerUp) {
+        return Rect.intersects(powerUp.getRectangle(), rectangle) || Rect.intersects(powerUp.getRectangle(), rectangle2);
     }
 }

@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,6 @@ public class ObstacleManager {
     private int obstacleGap;
     private int obstacleHeight;
     private int color;
-    private int score = 0;
 
     private long startTime;
     private long initTime;
@@ -27,6 +27,7 @@ public class ObstacleManager {
         this.obstacleHeight = obstacleHeight;
         this.color = color;
         obstacles = new ArrayList<>();
+        Constants.SCORE = 0;
 
         startTime =initTime = System.currentTimeMillis();
 
@@ -44,29 +45,38 @@ public class ObstacleManager {
         }
     }
 
-    public void update () {
+    public void update(int state) {
+        if (startTime < Constants.INIT_TIME) startTime = Constants.INIT_TIME;
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime =  System.currentTimeMillis();
-        float speed = (float) (1 + Math.sqrt(startTime-initTime)/1000.0)*Constants.SCREEN_HEIGHT / 10000.0f;
+        Constants.SCORE += elapsedTime / 750f;
+        float speed;
+        if (state == 0)
+            speed = (float) (1 + Math.pow((startTime - initTime), 0.66) / 1000.0) * Constants.SCREEN_HEIGHT / 10000.0f;
+        else
+            speed = (float) (1 + Math.pow((startTime - initTime), 0.66) / 1000.0 / 3.0f) * Constants.SCREEN_HEIGHT / 10000.0f;
+
         for (Obstacle ob : obstacles)
             ob.incrementY(speed * elapsedTime);
         if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
-            int xStart = (int) (Math.random()*(Constants.SCREEN_WIDTH-playerGap));
-            obstacles.add(0,new Obstacle(obstacleHeight,color,xStart,
-                    obstacles.get(0).getRectangle().top-obstacleHeight-obstacleGap, playerGap));
-            obstacles.remove(obstacles.size()-1);
-            score++;
+            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+            obstacles.add(0, new Obstacle(obstacleHeight, color, xStart,
+                    obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
+            obstacles.remove(obstacles.size() - 1);
         }
 
     }
+
 
     public void draw (Canvas canvas) {
         for (Obstacle ob: obstacles)
             ob.draw(canvas);
         Paint paint = new Paint();
-        paint.setColor(Color.MAGENTA);
+        paint.setColor(Color.DKGRAY);
         paint.setTextSize(100);
-        canvas.drawText(""+score,50,50-paint.ascent()+paint.descent(),paint);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        canvas.drawText("" + df.format(Constants.SCORE), 50, 30 - paint.ascent() + paint.descent(), paint);
     }
 
     public boolean playerCollide (RectPlayer player) {
@@ -76,4 +86,13 @@ public class ObstacleManager {
 
         return false;
     }
+
+    public boolean powerUpCollide(PowerUp powerUp) {
+        for (Obstacle ob : obstacles)
+            if (ob.powerUpCollide(powerUp))
+                return true;
+
+        return false;
+    }
+
 }
