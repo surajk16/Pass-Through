@@ -1,5 +1,7 @@
 package com.example.suraj.touchit;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,7 +19,7 @@ import java.util.Random;
  * Created by suraj on 29-06-2017.
  */
 
-public class GameplayScene implements Scene {
+public class GameplayScene extends Activity implements Scene {
 
     protected RectPlayer player;
     protected Point playerPoint;
@@ -41,7 +43,7 @@ public class GameplayScene implements Scene {
     public GameplayScene() {
         mFinalbitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.bg);
         mFinalbitmap = Bitmap.createScaledBitmap(mFinalbitmap, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, true);
-        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.GREEN);
+        player = new RectPlayer(new Rect(100, 100, 210, 210), Color.GREEN);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
         obstacleManager = new ObstacleManager(250, 450, 75, Color.BLACK);
@@ -54,7 +56,7 @@ public class GameplayScene implements Scene {
     }
 
     public void reset() {
-        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.GREEN);
+        player = new RectPlayer(new Rect(100, 100, 210, 210), Color.GREEN);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
         obstacleManager = new ObstacleManager(250, 450, 75, Color.BLACK);
@@ -66,9 +68,10 @@ public class GameplayScene implements Scene {
         powerUp.setInvisible();
         gameElapsedTime = 0;
         speedState = 0;
+        powerUpInvisibleTime = 0;
     }
 
-    private void drawCenterText(Canvas canvas, Paint paint, String text) {
+    private void drawCenterText(Canvas canvas, Paint paint, String text, float height) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
         int cHeight = r.height();
@@ -76,7 +79,7 @@ public class GameplayScene implements Scene {
         paint.getTextBounds(text, 0, text.length(), r);
         float x = cWidth / 2f - r.width() / 2f - r.left;
         //float y = cHeight / 2f + r.height() / 2f - r.bottom;
-        float y = 500;
+        float y = height;
         canvas.drawText(text, x, y, paint);
     }
 
@@ -93,7 +96,7 @@ public class GameplayScene implements Scene {
 
             if (!powerUpActivated) {
                 if (!powerUp.isVisible()) {
-                    if ((int) (System.currentTimeMillis() - powerUpInvisibleTime) >= 2000) {
+                    if (((int) (System.currentTimeMillis() - powerUpInvisibleTime) >= 10000) && gameElapsedTime > 10000) {
                         powerUp.setVisible();
                         Random rand = new Random();
                         state = rand.nextInt(3);
@@ -132,8 +135,8 @@ public class GameplayScene implements Scene {
                     float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
                     float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
 
-                    float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 750f;
-                    float ySpeed = 2 * pitch * Constants.SCREEN_HEIGHT / 1000f;
+                    float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / (Constants.SENSITIVITY * 150);
+                    float ySpeed = 2 * pitch * Constants.SCREEN_HEIGHT / (Constants.SENSITIVITY * 200);
 
                     playerPoint.x += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
                     playerPoint.y -= Math.abs(ySpeed * elapsedTime) > 5 ? ySpeed * elapsedTime : 0;
@@ -185,7 +188,7 @@ public class GameplayScene implements Scene {
             paint.setTextSize(200);
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
-            drawCenterText(canvas, paint, "" + df.format(Constants.SCORE));
+            drawCenterText(canvas, paint, "" + df.format(Constants.SCORE), 500);
 
         }
     }
@@ -238,7 +241,7 @@ public class GameplayScene implements Scene {
                 }
                 break;
             case 2:
-                Constants.SCORE += 20;
+                Constants.SCORE += 5;
                 powerUpActivated = false;
                 powerUpInvisibleTime = System.currentTimeMillis();
         }
@@ -251,6 +254,12 @@ public class GameplayScene implements Scene {
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
         canvas.drawRect(rectangle, paint);
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(50);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        drawCenterText(canvas, paint, "" + df.format((5000 - (System.currentTimeMillis() - powerupActivatedTime)) / 1000f), Constants.SCREEN_HEIGHT);
+
     }
 
 }

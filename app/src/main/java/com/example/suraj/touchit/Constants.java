@@ -19,4 +19,6 @@ public class Constants {
 
     public static Bitmap PLATFORM;
 
+    public static float SENSITIVITY = 5;
+
 }

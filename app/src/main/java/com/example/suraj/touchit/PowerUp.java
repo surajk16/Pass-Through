@@ -19,7 +19,7 @@ public class PowerUp implements GameObject {
     private boolean VISIBLE = false;
     private long startTime;
     private long initTime;
-    private Animation coin;
+    private Animation touch,speed,coin;
     private AnimationManager animManager;
 
     public PowerUp(int state, int startX, int startY) {
@@ -37,8 +37,6 @@ public class PowerUp implements GameObject {
         else if (state == 2)
             paint.setColor(Color.BLUE);
 
-        BitmapFactory bf = new BitmapFactory();
-
         Bitmap[] coins = new Bitmap[5];
         coins[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin1);
         coins[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin2);
@@ -46,27 +44,39 @@ public class PowerUp implements GameObject {
         coins[3] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin4);
         coins[4] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin5);
 
+        Bitmap[] touchPowerup = new Bitmap[1];
+        touchPowerup[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.touch);
+
+        Bitmap[] speedPowerup = new Bitmap[1];
+        speedPowerup[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.speed);
+
+        touch = new Animation(touchPowerup, 0.5f);
+        speed = new Animation(speedPowerup, 0.5f);
         coin = new Animation(coins, 0.5f);
-        animManager = new AnimationManager(new Animation[]{coin});
+
+        animManager = new AnimationManager(new Animation[]{touch,speed,coin});
 
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if (state != 2) canvas.drawRect(rectangle, paint);
-        else animManager.draw(canvas, rectangle);
+        animManager.draw(canvas, rectangle);
 
     }
 
     @Override
     public void update() {
-        if (state == 0)
-            paint.setColor(Color.BLACK);
-        else if (state == 1)
-            paint.setColor(Color.GREEN);
-        else if (state == 2) {
+        if (state == 0) {
             animManager.update();
             animManager.playAnim(0);
+        }
+        else if (state == 1) {
+            animManager.update();
+            animManager.playAnim(1);
+        }
+        else if (state == 2) {
+            animManager.update();
+            animManager.playAnim(2);
         }
         if (startTime < Constants.INIT_TIME) startTime = Constants.INIT_TIME;
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);

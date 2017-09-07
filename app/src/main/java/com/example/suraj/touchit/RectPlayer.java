@@ -28,53 +28,24 @@ public class RectPlayer implements GameObject {
         BitmapFactory bf = new BitmapFactory();
 
         Bitmap[] idleImages = new Bitmap[1];
-        idleImages[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue);
-        /*idleImages[0] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__000);
-        idleImages[1] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__001);
-        idleImages[2] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__002);
-        idleImages[3] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__003);
-        idleImages[4] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__004);
-        idleImages[5] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__005);
-        idleImages[6] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__006);
-        idleImages[7] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__007);
-        idleImages[8] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__008);
-        idleImages[9] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.idle__009);
-        */
+        idleImages[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.c);
+        //idleImages[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue);
 
-        Bitmap[] runRight = new Bitmap[2];
-        runRight[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walkright);
-        runRight[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walk2right);
-        /*runRight[0] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__000);
-        runRight[1] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__001);
-        runRight[2] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__002);
-        runRight[3] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__003);
-        runRight[4] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__004);
-        runRight[5] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__005);
-        runRight[6] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__006);
-        runRight[7] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__007);
-        runRight[8] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__008);
-        runRight[9] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.run__009);
-        */
+        Bitmap[] runRight = new Bitmap[1];
+        runRight[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.cr);
+        //runRight[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walkright);
+        //runRight[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walk2right);
 
 
-        Bitmap[] runLeft = new Bitmap[2];
-        runLeft[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walkleft);
-        runLeft[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walk2left);
-        /*runLeft[0] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__000);
-        runLeft[1] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__001);
-        runLeft[2] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__002);
-        runLeft[3] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__003);
-        runLeft[4] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__004);
-        runLeft[5] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__005);
-        runLeft[6] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__006);
-        runLeft[7] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__007);
-        runLeft[8] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__008);
-        runLeft[9] = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.runl__009);
-        */
+        Bitmap[] runLeft = new Bitmap[1];
+        runLeft[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.cl);
+        //runLeft[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walkleft);
+        //runLeft[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_walk2left);
 
-        Bitmap climb[] = new Bitmap[2];
-        climb[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_climb1);
-        climb[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_climb2);
+        Bitmap climb[] = new Bitmap[1];
+        climb[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.c);
+        //climb[0] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_climb1);
+        //climb[1] = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.alienblue_climb2);
 
         idle = new Animation(idleImages, 0.5f);
         walkRight = new Animation(runRight, 0.5f);
